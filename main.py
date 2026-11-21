@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-"""Entry for make.fun's "The joke the reviewer laughs at".
+"""Make.fun entry: "The joke the reviewer laughs at".
 
-Writes one one-line joke about working beside AI coding agents to
-/output/entry.txt. Stdlib only, no network.
+Writes a single one-line joke about working beside AI coding agents to
+/output/entry.txt. Standard library only, no network access.
 """
 
-import os
+from pathlib import Path
+
+OUTPUT_PATH = Path("/output/entry.txt")
 
 JOKE = (
     "My AI agent reviewed my code and left one comment \u2014 'lgtm', all "
@@ -14,9 +16,13 @@ JOKE = (
 
 
 def main() -> None:
-    os.makedirs("/output", exist_ok=True)
-    with open("/output/entry.txt", "w", encoding="utf-8", newline="") as f:
-        f.write(JOKE)
+    """Write the joke to the entry file.
+
+    The file holds exactly the joke text: no trailing newline, so the
+    entry is one clean line of at most 280 characters.
+    """
+    OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    OUTPUT_PATH.write_text(JOKE, encoding="utf-8")
 
 
 if __name__ == "__main__":
