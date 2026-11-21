@@ -1,29 +1,31 @@
 #!/usr/bin/env python3
-"""Make.fun entry: "The joke the reviewer laughs at".
+"""Write the competition joke to /output/entry.txt.
 
-Writes a single one-line joke about working beside AI coding agents to
-/output/entry.txt. Standard library only, no network access.
+Standard library only. Writes exactly one line, no trailing newline.
 """
 
 from pathlib import Path
 
-OUTPUT_PATH = Path("/output/entry.txt")
-
-JOKE = (
-    "My AI agent reviewed my code and left one comment \u2014 'lgtm', all "
-    "lowercase, like it was afraid of hurting my feelings."
-)
+JOKE = "My AI agent reviewed my code and left one comment — 'lgtm', all lowercase, like it was afraid of hurting my feelings."
 
 
-def main() -> None:
-    """Write the joke to the entry file.
+MAX_CHARS = 280
 
-    The file holds exactly the joke text: no trailing newline, so the
-    entry is one clean line of at most 280 characters.
-    """
-    OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    OUTPUT_PATH.write_text(JOKE, encoding="utf-8")
+
+def write_entry(text: str, out_path: Path) -> None:
+    """Validate the text, then write it with no trailing newline."""
+    if "\n" in text or "\r" in text:
+        raise ValueError("entry must be a single line")
+    if len(text) > MAX_CHARS:
+        raise ValueError(f"entry is {len(text)} chars, over the {MAX_CHARS} limit")
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(text, encoding="utf-8")
+
+
+def main() -> int:
+    write_entry(JOKE, Path("/output/entry.txt"))
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
