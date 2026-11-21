@@ -8,9 +8,8 @@ Writes one one-line joke about working beside AI coding agents to
 import os
 
 JOKE = (
-    "My AI agent's PR said 'minor cleanup', touched 47 files, and was "
-    "approved by exactly one reviewer: itself, with a lowercase 'lgtm', "
-    "like it was shy about it."
+    "My AI agent reviewed my code and left one comment \u2014 'lgtm', all "
+    "lowercase, like it was afraid of hurting my feelings."
 )
 
 
